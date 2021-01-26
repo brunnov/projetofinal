@@ -1,0 +1,62 @@
+<h1 mat-dialog-title>{{data.header}}</h1>
+<div mat-dialog-content class="inputSelect">
+  <mat-form-field>
+    <mat-label>Nome: </mat-label>
+    <input matInput [(ngModel)]="data.nome">
+  </mat-form-field>
+</div>
+<div mat-dialog-content class="inputSelect">
+    <mat-form-field>
+      <mat-label>Login: </mat-label>
+      <input matInput [(ngModel)]="data.login">
+    </mat-form-field>
+  </div>
+<div mat-dialog-content class="inputSelect">
+  <mat-form-field>
+    <mat-label>CPF\CNPJ: </mat-label>
+    <input matInput [(ngModel)]="data.cpf_cnpj">
+  </mat-form-field>
+</div>
+<div mat-dialog-content class="inputSelect">
+  <mat-form-field>
+    <mat-label>Endereço: </mat-label>
+    <input matInput [(ngModel)]="data.endereco">
+  </mat-form-field>
+</div>
+<div mat-dialog-content class="inputSelect">
+  <mat-form-field>
+    <mat-label>Telefone: </mat-label>
+    <input matInput [(ngModel)]="data.telefone">
+  </mat-form-field>
+</div>
+<div mat-dialog-content class="inputSelect">
+  <mat-form-field>
+    <mat-label>E-mail: </mat-label>
+    <input matInput [(ngModel)]="data.email">
+  </mat-form-field>
+</div>
+<div mat-dialog-content class="inputSelect">
+  <mat-form-field>
+    <mat-label>Responsável: </mat-label>
+    <input matInput [(ngModel)]="data.responsavel">
+  </mat-form-field>
+</div>
+<div mat-dialog-content class="inputSelect">
+  <mat-form-field>
+    <mat-label>Senha:</mat-label>
+    <input matInput #senha [(ngModel)]="data.senha" [type]="hide ? 'password' : 'text'">
+    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+    </button>
+  </mat-form-field>
+</div>
+<div mat-dialog-content class="inputSelect">
+  <mat-form-field>
+    <mat-label>Especialidade: </mat-label>
+    <input matInput [(ngModel)]="data.formapagamento">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Salvar</button>
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+</div>

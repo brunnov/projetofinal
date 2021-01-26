@@ -1,0 +1,63 @@
+<table mat-table id="contactJs" [dataSource]="dataSource" class="example-container mat-elevation-z8">
+
+    <!-- Checkbox Column -->
+    <ng-container matColumnDef="select">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-checkbox (change)="$event ? masterToggle() : null"
+                      [checked]="isAllSelected()"
+                      [indeterminate]="selection.hasValue() && !isAllSelected()"
+                      [aria-label]="checkboxLabel()">
+        </mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let row">
+        <mat-checkbox (click)="$event.stopPropagation()"
+                      (change)="$event ? selection.toggle(row) : null"
+                      (change)="$event ? selecao($event.checked,row) : null"
+                      [checked]="selection.isSelected(row)"
+                      [aria-label]="checkboxLabel(row)">
+        </mat-checkbox>
+      </td>
+    </ng-container>
+  
+    <!-- Position Column -->
+    <ng-container matColumnDef="os">
+      <th mat-header-cell *matHeaderCellDef> OS </th>
+      <td mat-cell *matCellDef="let element"> {{element.id_clientes}} </td>
+    </ng-container>
+  
+    <!-- Name Column -->
+    <ng-container matColumnDef="abertura">
+      <th mat-header-cell *matHeaderCellDef> Data Abertura </th>
+      <td mat-cell *matCellDef="let element"> {{element.nome_razaosocial}} </td>
+    </ng-container>
+  
+    <!-- Weight Column -->
+    <ng-container matColumnDef="cliente">
+      <th mat-header-cell *matHeaderCellDef> Cliente </th>
+      <td mat-cell *matCellDef="let element"> {{element.CPF_CNPJ}} </td>
+    </ng-container>
+  
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef> Status </th>
+      <td mat-cell *matCellDef="let element"> {{element.telefone}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="funcionario">
+      <th mat-header-cell *matHeaderCellDef> Funcionário </th>
+      <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+    </ng-container>
+    
+
+    <ng-container matColumnDef="editar">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element"> editar </td>
+    </ng-container>
+  
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+        (click)="edicao(row)">
+    </tr>
+  </table>
+  

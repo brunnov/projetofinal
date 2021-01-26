@@ -1,0 +1,30 @@
+<mat-sidenav-container class="example-container " *ngIf="shouldRun">
+  <mat-sidenav class = "size-container" #sidenav [mode]="mode.value" [(opened)]="opened">
+    <p>
+     
+      <a routerLink="/home">Home</a></p>  
+      <p><a routerLink="/cliente">Clientes</a></p>
+       <p><a routerLink="/funcionario">Funcionários</a></p> 
+       <p><a routerLink="/agendamento">Serviços</a></p> 
+       <p><a routerLink="">Estoque</a></p>
+  
+    
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+      <button class="button-e" mat-mini-fab (click)="sidenav.toggle()">
+          <mat-icon>list</mat-icon>
+        </button>
+        <div class="div-container">
+          <h1 mat-dialog-title>Funcionário</h1>
+          <div>
+            <app-table-funcionario></app-table-funcionario>
+          </div>
+          <div class="example-button-row">
+              <button mat-raised-button color="accent" (click)="inclusao()">Incluir</button>
+              <button mat-raised-button color="accent" (click)="exclusao()">Deletar</button>
+            </div>
+          </div>
+      
+  </mat-sidenav-content>
+</mat-sidenav-container>
