@@ -51,7 +51,8 @@ def clienteinclusao():
     endereco = request.json['endereco']
     responsavel = request.json['responsavel']
     login = request.json['login']
-    result = cli.inclusao(cpf_cnpj, senha, login, nome, telefone, email, endereco, responsavel)    
+    diaPagamento = request.json['diaPagamento']
+    result = cli.inclusao(cpf_cnpj, senha, login, nome, telefone, email, endereco, responsavel,diaPagamento)    
     return jsonify(result)
 
 
@@ -72,10 +73,10 @@ def clienteedicao():
     telefone = request.json['telefone']
     cpf_cnpj = request.json['cpf_cnpj']
     endereco = request.json['endereco']
-    pagamento = request.json['pagamento']
     responsavel = request.json['responsavel']
     diaPagamento = request.json['diaPagamento']
-    result = cli.edicao(cpf_cnpj, nome, endereco, telefone, email, senha, idusuario, responsavel, pagamento, diaPagamento)
+    login = request.json['login']
+    result = cli.edicao(cpf_cnpj, nome, endereco, telefone, email, senha, idusuario, responsavel, diaPagamento, login)
     return jsonify(result)
 
 @app.route('/funcionarios', methods=['GET'])
@@ -95,6 +96,13 @@ def funcionarioinclusao():
     especialidade = request.json['especialidade']
     login = request.json['login']
     result = fun.inclusao(cpf_cnpj,senha,login,nome,telefone,email,endereco,especialidade)
+    return jsonify(result)
+
+@app.route('/funcionarioexclusao', methods=['POST'])
+def funicionarioexclusao():
+    request.get_json(force=True)
+    id = request.json['id']
+    result = fun.exclusao(id)
     return jsonify(result)
 
 if __name__ == '__main__':    

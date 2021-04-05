@@ -54,7 +54,7 @@
 <div mat-dialog-content class="inputSelect">
   <mat-form-field class="select">
   <mat-label>Dia Pagamento:</mat-label>
-  <mat-select [(value)]="selected" (selectionChange)="selectionDia($event.value)">
+  <mat-select [(value)]="data.diapagamento" (selectionChange)="selectionDia($event.value)">
     <mat-option value="1">1</mat-option>
     <mat-option value="2">2</mat-option>
     <mat-option value="3">3</mat-option>
@@ -82,12 +82,6 @@
     <mat-option value="25">25</mat-option>
   </mat-select>
 </mat-form-field>
-</div>
-<div mat-dialog-content class="inputSelect">
-  <mat-form-field>
-    <mat-label>Forma Pagamento: </mat-label>
-    <input matInput [(ngModel)]="data.formapagamento">
-  </mat-form-field>
 </div>
 <div mat-dialog-actions>
   <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Salvar</button>

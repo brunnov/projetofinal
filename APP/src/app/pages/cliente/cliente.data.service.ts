@@ -66,30 +66,14 @@ export class DataServiceCliente {
     cpf_cnpj: string,
     telefone: string,
     senha: string,
-    responsavel: string
+    responsavel: string, 
+    diaPagamento: string
   ): Observable<any> {
     const url = `${apiUrl}/clienteinclusao`;
 
-    const textAplicacao =
-      '{"nome":"' +
-      nome +
-      '","email":"' +
-      email +
-      '","endereco":"' +
-      endereco +
-      '","cpf_cnpj":"' +
-      cpf_cnpj +
-      '","senha": "' +
-      senha +
-      '","telefone":"' +
-      telefone +
-      '","login":"' +
-      login+
-      '","responsavel":"' +
-      responsavel +
-      '"}';
+    const textAplicacao ={nome:nome,email:email,endereco:endereco,cpf_cnpj:cpf_cnpj,telefone:telefone,senha:senha,responsavel:responsavel,diaPagamento:diaPagamento,login:login}
     console.log(textAplicacao);
-    const json = JSON.parse(textAplicacao);
+    const json = JSON.stringify(textAplicacao);
     return this.http
       .post<any>(url, json, {
         observe: 'body',
@@ -108,36 +92,14 @@ export class DataServiceCliente {
     cpf_cnpj: string,
     telefone: string,
     senha: string,
-    pagamento: any[],
     responsavel: string,
-    diaPagamento: string
+    diaPagamento: string,
+    login?:string
   ): Observable<any> {
     const url = `${apiUrl}/clienteedicao`;
 
-    const textAplicacao =
-      '{"nome":"' +
-      nome +
-      '","email":"' +
-      email +
-      '","endereco":"' +
-      endereco +
-      '","cpf_cnpj":"' +
-      cpf_cnpj +
-      '","senha": "' +
-      senha +
-      '","telefone":"' +
-      telefone +
-      '","pagamento":"' +
-      pagamento +
-      '","responsavel":"' +
-      responsavel +
-      '","diaPagamento":"' +
-      diaPagamento +
-      '","id":"' +
-      id +
-      '" }';
-    console.log(textAplicacao);
-    const json = JSON.parse(textAplicacao);
+    const textAplicacao ={nome:nome,id:id,email:email,endereco:endereco,cpf_cnpj:cpf_cnpj,telefone:telefone,senha:senha,responsavel:responsavel,diaPagamento:diaPagamento,login:login}
+    const json = JSON.stringify(textAplicacao);
     return this.http
       .post<any>(url, json, {
         observe: 'body',

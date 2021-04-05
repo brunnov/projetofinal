@@ -3,7 +3,6 @@ import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { DataServiceCliente } from './cliente.data.service';
 import { ModalComponent } from './modal/modal.component';
-import { diaPagamento} from './modal/modal.component';
 import { selecionado } from './table/table.component';
 export let fpagamento;
 export interface DialogData {
@@ -49,10 +48,9 @@ export class ClienteComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       this.dataService.postClientesInclusao(result.nome, result.email, result.endereco, result.login,
-        result.cpf_cnpj, result.telefone, result.senha, result.responsavel).subscribe(
+        result.cpf_cnpj, result.telefone, result.senha, result.responsavel,result.diapagamento).subscribe(
         (res: any) => {
-          this.data = res;
-          if ( this.data === ['rollback']) {
+          if ( res === 'rollback') {
             alert('erro');
           } else {
            location.reload();

@@ -4,7 +4,7 @@ import {
   MatDialogRef,
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
-import { DialogData, fpagamento } from '../cliente.component';
+import { DialogData } from '../cliente.component';
 import { DataServiceCliente } from '../cliente.data.service';
 import { FormControl } from '@angular/forms';
 export let diaPagamento: string;
@@ -27,13 +27,6 @@ export class ModalComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private dataService: DataServiceCliente
   ) {
-    if (data.diapagamento !== undefined) {
-      this.selected = data.diapagamento.toString();
-      fpagamento.map((num) => {
-        this.toppingList.push(num);
-      });
-      this.selected2 = data.formapagamento;
-    }
   }
 
   ngOnInit() {}

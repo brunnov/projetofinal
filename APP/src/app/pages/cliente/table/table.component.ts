@@ -5,7 +5,6 @@ import { MatTableDataSource } from '@angular/material/table';
 
 import { ModalComponent } from '../modal/modal.component';
 export let selecionado: any[] = [];
-import {diaPagamento} from '../modal/modal.component';
 import { DataServiceCliente } from '../cliente.data.service';
 import { Cliente } from '../interface-cliente';
 
@@ -49,28 +48,29 @@ export class TableComponent implements OnInit {
   }
 
   edicao(row): void {
-    this.dataService.postClientes(row.id_usuario).subscribe(
+    this.dataService.postClientes(row.id_clientes).subscribe(
           (res: any) => {
             this.data = res;
             const dialogRef = this.dialog.open(ModalComponent, {
               width: '600px',
               height: '600px',
               data: {nome: res[0].nome_razaosocial, email: res[0].email, endereco: res[0].endereco, telefone: res[0].telefone,
-              senha: res[0].senha, cpf_cnpj: res[0].CPF_CNPJ, responsavel: res[0].responsavel, diapagamento: res[0].dia_pagamento,
-              formapagamento: res[0].codigo_forma_pagamento, header: 'Editar Cliente', login: res[0].login  },
+              senha: res[0].senha, cpf_cnpj: res[0].CPF_CNPJ, responsavel: res[0].responsavel === null ? '': res[0].responsavel, diapagamento: res[0].dia_pagamento === null ? '': res[0].dia_pagamento.toString(),
+              header: 'Editar Cliente', login: res[0].login  },
             });
-            dialogRef.afterClosed().subscribe(result => {
-              let p;
+            dialogRef.afterClosed().subscribe(async result => {
               let d;
               console.log('The dialog was closed');
-              diaPagamento === undefined ? d = res[0].Dia_Pagamento : d = diaPagamento;
-              this.dataService.postClienteEdicao(this.data[0].Id_Usuario, result.nome, result.email, result.endereco,
-                result.cpf_cnpj, result.telefone, result.senha, p, result.responsavel, d).subscribe(
+              
+              await this.dataService.postClienteEdicao(this.data[0].id_clientes, result.nome, result.email, result.endereco,
+                result.cpf_cnpj, result.telefone, result.senha, result.responsavel, result.diapagamento,result.login).subscribe(
                 (res: any) => {
-                  this.data = res;
-                  if ( this.data === ['rollback']) {
-                    alert('erro');
+                  
+                  if ( res === 'rollback' || res === null) {
+                    alert('Erro ao Atualizar o Cliente');
                   }
+                  if(res === 'Feito')
+                  {location.reload();}
                 },
                 err => {
                   console.log(err);
@@ -93,16 +93,16 @@ export class TableComponent implements OnInit {
     } else {
       this.dataSource.data.forEach(row => {
       this.selection.select(row);
-      selecionado.push(row.id_usuario);
+      selecionado.push(row.id_clientes);
     });
   }
   }
 
   selecao(checked, row) {
     if (checked) {
-      selecionado.push(row.id_usuario);
+      selecionado.push(row.id_clientes);
     } else {
-      selecionado.splice(selecionado.indexOf(row.id_usuario), 1);
+      selecionado.splice(selecionado.indexOf(row.id_clientes), 1);
 
     }
   }
@@ -112,7 +112,7 @@ export class TableComponent implements OnInit {
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id_usuario + 1}`;
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id_clientes + 1}`;
   }
 
 

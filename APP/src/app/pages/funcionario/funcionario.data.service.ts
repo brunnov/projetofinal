@@ -43,7 +43,7 @@ export class DataServiceFuncionario {
     );
   }
   postFuncionarios(id: string): Observable<any> {
-    const url = `${apiUrl}/cliente`;
+    const url = `${apiUrl}/funcionario`;
     console.log(id)
     const textAplicacao =
     '{"id":"' +

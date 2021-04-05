@@ -37,12 +37,6 @@
 </div>
 <div mat-dialog-content class="inputSelect">
   <mat-form-field>
-    <mat-label>Responsável: </mat-label>
-    <input matInput [(ngModel)]="data.responsavel">
-  </mat-form-field>
-</div>
-<div mat-dialog-content class="inputSelect">
-  <mat-form-field>
     <mat-label>Senha:</mat-label>
     <input matInput #senha [(ngModel)]="data.senha" [type]="hide ? 'password' : 'text'">
     <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">

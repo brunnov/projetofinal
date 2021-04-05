@@ -26,7 +26,21 @@ def inclusao(cpf_cnpj,senha,login,nome,telefone,email,endereco,especialidade):
         result = sql.query(stmt)
         for x in result:
             
-            stmt = f''' INSERT INTO public.clientes("Id_Usuario", "Responsavel", "Codigo_Forma_Pagamento", "Dia_Pagamento")
+            stmt = f''' INSERT INTO public."Funcionarios"("Id_Usuario", "Responsavel", "Codigo_Forma_Pagamento", "Dia_Pagamento")
 	    VALUES ('{x['Id_Usuario']}',  ); '''
             result = sql.update(stmt)
     return(result)
+
+def exclusao(id):
+    for x in id:
+        stmt = f''' delete from "Funcionarios" where "id_usuario" = {x}'''
+        print(stmt)
+        result = sql.update(stmt)
+
+def edicao(cpf_cnpj, nome, endereco, telefone, email, senha, idusuario, responsavel, pagamento, diaPagamento):
+    stmt = f'''UPDATE "Usuarios" set "CPF_CNPJ" = '{cpf_cnpj}', "senha" = '{senha}'
+	    where  "Id_Usuario" = {idusuario}'''
+    result = sql.update(stmt)
+    stmt = f''' UPDATE public.clientes set "Responsavel" = '{responsavel}', "Codigo_Forma_Pagamento" ={pagamento}, "Dia_Pagamento" ={diaPagamento}
+	 where  "Id_Usuario" = {idusuario}'''
+    result = sql.update(stmt)
