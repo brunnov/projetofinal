@@ -22,7 +22,7 @@ export class TableComponent implements OnInit {
 
   ngOnInit() {
 
-    this.dataService.getClientes().subscribe(
+    this.dataService.getAgendamento().subscribe(
       (res: any) => {
         this.data = res;
         this.data.map(num => {

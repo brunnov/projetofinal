@@ -8,6 +8,7 @@ import csv
 from datetime import datetime
 import cliente as cli
 import funcionario as fun
+import agendamento as age
 #import sendemailat as send
 
 back = []
@@ -18,7 +19,7 @@ CORS(app, origins="http://localhost:4200", allow_headers=[
 def selectItem(it):
     print(it)
     return (it)
-
+#Cliente página
 @app.route('/clientes', methods=['GET'])
 def clientes():
     result = cli.todos()
@@ -78,10 +79,16 @@ def clienteedicao():
     login = request.json['login']
     result = cli.edicao(cpf_cnpj, nome, endereco, telefone, email, senha, idusuario, responsavel, diaPagamento, login)
     return jsonify(result)
-
+#Funicionários Página
 @app.route('/funcionarios', methods=['GET'])
 def funcionarios():
     result = fun.todos()
+    return jsonify(result)
+
+@app.route('/funcionario', methods=['POST'])
+def funcionario():
+    idfuncionario = request.json['idfuncionario']
+    result = fun.busca(idfuncionario)
     return jsonify(result)
 
 @app.route('/funcionarioinclusao', methods=['POST'])
@@ -103,6 +110,28 @@ def funicionarioexclusao():
     request.get_json(force=True)
     id = request.json['id']
     result = fun.exclusao(id)
+    return jsonify(result)
+
+@app.route('/funcionarioedicao',methods=['POST'])
+def funcionarioedicao():
+    request.get_json(force=True)
+    senha = request.json['senha']
+    nome = request.json['nome']
+    email = request.json['email']
+    telefone = request.json['telefone']
+    cpf_cnpj = request.json['cpf_cnpj']
+    endereco = request.json['endereco']
+    especialidade = request.json['especialidade']
+    login = request.json['login']
+    id = request.json['id']
+    result = fun.edicao(cpf_cnpj, nome, endereco, telefone, email, senha, login,especialidade, id)
+    return jsonify(result)
+
+#Página de Serviços
+
+@app.route('/buscaagendamento', methods=['GET'])
+def buscaagendamento():
+    result = age.todos()
     return jsonify(result)
 
 if __name__ == '__main__':    

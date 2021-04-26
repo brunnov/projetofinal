@@ -69,6 +69,9 @@ export class TableComponent implements OnInit {
                   if ( res === 'rollback' || res === null) {
                     alert('Erro ao Atualizar o Cliente');
                   }
+                  if(res === 'Login já existe'){
+                    alert('Login já existe')
+                  }
                   if(res === 'Feito')
                   {location.reload();}
                 },

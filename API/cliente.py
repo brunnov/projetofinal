@@ -15,39 +15,57 @@ def inclusao(cpf_cnpj, senha, login, nome, telefone, email, endereco, responsave
     stmt = f''' select "id_usuario" from "Usuarios" where "CPF_CNPJ" = '{cpf_cnpj}' '''
     result = sql.query(stmt)
     print(result)
-    if result == []:
+    stmt = f'''select "id_usuario" from "Usuarios" where "login" = '{login}' '''
+    result1 = sql.query(stmt)
+    print(result1)
+    if result1 == []:
+        if result == []:
 
-        stmt = f'''INSERT INTO public."Usuarios"("CPF_CNPJ", senha, login)
-	    VALUES ('{cpf_cnpj}', '{senha}', '{login}') '''
-        result = sql.update(stmt)
-        print(result)
-        if result == 'Feito':
-            stmt = f'''select "id_usuario" from "Usuarios" where login = '{login}' and "CPF_CNPJ" = '{cpf_cnpj}' '''
+            stmt = f'''INSERT INTO public."Usuarios"("CPF_CNPJ", senha, login)
+	        VALUES ('{cpf_cnpj}', '{senha}', '{login}') '''
+            result = sql.update(stmt)
+            print(result)
+            if result == 'Feito':
+                stmt = f'''select "id_usuario" from "Usuarios" where login = '{login}' and "CPF_CNPJ" = '{cpf_cnpj}' '''
+                result = sql.query(stmt)
+                for x in result:
+
+                    stmt = f''' INSERT INTO public."Clientes"(id_usuario, nome_razaosocial, telefone, email, endereco, responsavel, dia_pagamento)
+	        VALUES ('{x['id_usuario']}', '{nome}', '{telefone}', '{email}','{endereco}', '{responsavel}',{diaPagamento});'''
+                result = sql.update(stmt)
+        else:
+            stmt = f'''select "Id_Usuario" from Usuarios where "CPF_CNPJ" = '{cpf_cnpj}' '''
             result = sql.query(stmt)
             for x in result:
-                
-                stmt = f''' INSERT INTO public."Clientes"(id_usuario, nome_razaosocial, telefone, email, endereco, responsavel, dia_pagamento)
-	    VALUES ('{x['id_usuario']}', '{nome}', '{telefone}', '{email}','{endereco}', '{responsavel}',{diaPagamento});'''
-            result = sql.update(stmt)
+
+                stmt = f''' INSERT INTO public.clientes("Id_Usuario", "Responsavel", "Codigo_Forma_Pagamento", "Dia_Pagamento")
+	        VALUES ('{x['Id_Usuario']}', '{responsavel}' );'''
+                result = sql.update(stmt)
     else:
-        stmt = f'''select "Id_Usuario" from Usuarios where "CPF_CNPJ" = '{cpf_cnpj}' '''
-        result = sql.query(stmt)
-        for x in result:
-            
-            stmt = f''' INSERT INTO public.clientes("Id_Usuario", "Responsavel", "Codigo_Forma_Pagamento", "Dia_Pagamento")
-	    VALUES ('{x['Id_Usuario']}', '{responsavel}' );'''
-            result = sql.update(stmt)
+        result = 'Login já existe'
     return(result)
 
 def edicao(cpf_cnpj, nome, endereco, telefone, email, senha, idusuario, responsavel, diaPagamento, login):
     
-    stmt = f'''UPDATE "Clientes" set "nome_razaosocial" = '{nome}', "endereco" = '{endereco}', "telefone" = '{telefone}', "email" = '{email}' , "responsavel" = '{responsavel}', "dia_pagamento" = {diaPagamento} where  "id_clientes" = {idusuario}'''
-    result = sql.update(stmt)
-    stmt = f'''select "id_usuario" from "Clientes" where  "id_clientes" = {idusuario} '''
+    stmt = f''' select "login" from "Usuarios" inner join "Clientes" on "Usuarios"."id_usuario" = "Clientes"."id_usuario" where "Clientes"."id_clientes" = {idusuario}'''
     result = sql.query(stmt)
     for x in result:
-        stmt = f''' UPDATE "Usuarios" set "CPF_CNPJ" = '{cpf_cnpj}' , "senha" = '{senha}',"login" = '{login}' where  "id_usuario" = {x['id_usuario']}'''
+        if x['login'] != login:
+            stmt = f'''select "id_usuario" from "Usuarios" where "login" = '{login}' '''
+            result1 = sql.query(stmt)
+        else:
+            result1 = []
+    print(result1)
+    if result1 == []:
+        stmt = f'''UPDATE "Clientes" set "nome_razaosocial" = '{nome}', "endereco" = '{endereco}', "telefone" = '{telefone}', "email" = '{email}' , "responsavel" = '{responsavel}', "dia_pagamento" = {diaPagamento} where  "id_clientes" = {idusuario}'''
         result = sql.update(stmt)
+        stmt = f'''select "id_usuario" from "Clientes" where  "id_clientes" = {idusuario} '''
+        result = sql.query(stmt)
+        for x in result:
+            stmt = f''' UPDATE "Usuarios" set "CPF_CNPJ" = '{cpf_cnpj}' , "senha" = '{senha}',"login" = '{login}' where  "id_usuario" = {x['id_usuario']}'''
+            result = sql.update(stmt)
+    else:
+        result = 'Login já existe'
     return result
 
 def exclusao(id):

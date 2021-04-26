@@ -42,7 +42,7 @@ export class ClienteComponent implements OnInit {
     const dialogRef = this.dialog.open(ModalComponent, {
       width: '600px',
       height: '600px',
-      data: {nome: '', email: '', diaPagamento: '', header: 'Incluir Cliente'},
+      data: {nome: '', email: '', diapagamento: '', header: 'Incluir Cliente'},
       disableClose: true
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -53,7 +53,13 @@ export class ClienteComponent implements OnInit {
           if ( res === 'rollback') {
             alert('erro');
           } else {
-           location.reload();
+            
+            if(res === 'Login já existe'){
+              alert('Login já existe')
+            }else{
+              location.reload();
+            }
+           
           }
         },
         err => {

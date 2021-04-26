@@ -46,7 +46,7 @@ export class DataServiceFuncionario {
     const url = `${apiUrl}/funcionario`;
     console.log(id)
     const textAplicacao =
-    '{"id":"' +
+    '{"idfuncionario":"' +
     id + '"}';
     const textjson = JSON.parse(textAplicacao);
     return this.http
@@ -109,11 +109,10 @@ export class DataServiceFuncionario {
     cpf_cnpj: string,
     telefone: string,
     senha: string,
-    pagamento: any[],
-    responsavel: string,
-    diaPagamento: string
+    login:string,
+    especialidade: string
   ): Observable<any> {
-    const url = `${apiUrl}/clienteedicao`;
+    const url = `${apiUrl}/funcionarioedicao`;
 
     const textAplicacao =
       '{"nome":"' +
@@ -128,12 +127,10 @@ export class DataServiceFuncionario {
       senha +
       '","telefone":"' +
       telefone +
-      '","pagamento":"' +
-      pagamento +
-      '","responsavel":"' +
-      responsavel +
-      '","diaPagamento":"' +
-      diaPagamento +
+      '","login":"' +
+      login +
+      '","especialidade":"' +
+      especialidade +
       '","id":"' +
       id +
       '" }';
@@ -162,7 +159,7 @@ export class DataServiceFuncionario {
         textAplicacao += ']}';
       }
     }
-    const url = `${apiUrl}/clienteexclusao`;
+    const url = `${apiUrl}/funcionarioexclusao`;
     const json = JSON.parse(textAplicacao);
     console.log(json)
     return this.http

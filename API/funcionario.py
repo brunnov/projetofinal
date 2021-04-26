@@ -1,7 +1,7 @@
 import conexao_banco as sql
 
 def todos():
-    stmt = 'select "id_funcionario","CPF_CNPJ", "email", "telefone","especialidade","nome" from "Usuarios" inner join "Funcionarios" on "Usuarios"."id_usuario" = "Funcionarios"."id_usuario" '
+    stmt = 'select "id_funcionario","CPF_CNPJ", "email", "telefone","especialidade","nome" from "Usuarios" inner join "Funcionarios" on "Usuarios"."id_usuario" = "Funcionarios"."id_usuario" order by  "id_funcionario"'
     result = sql.query(stmt)
     return(result)
 
@@ -33,14 +33,35 @@ def inclusao(cpf_cnpj,senha,login,nome,telefone,email,endereco,especialidade):
 
 def exclusao(id):
     for x in id:
-        stmt = f''' delete from "Funcionarios" where "id_usuario" = {x}'''
+        stmt = f''' delete from "Funcionarios" where "id_funcionario" = {x}'''
         print(stmt)
         result = sql.update(stmt)
 
-def edicao(cpf_cnpj, nome, endereco, telefone, email, senha, idusuario, responsavel, pagamento, diaPagamento):
-    stmt = f'''UPDATE "Usuarios" set "CPF_CNPJ" = '{cpf_cnpj}', "senha" = '{senha}'
-	    where  "Id_Usuario" = {idusuario}'''
-    result = sql.update(stmt)
-    stmt = f''' UPDATE public.clientes set "Responsavel" = '{responsavel}', "Codigo_Forma_Pagamento" ={pagamento}, "Dia_Pagamento" ={diaPagamento}
-	 where  "Id_Usuario" = {idusuario}'''
-    result = sql.update(stmt)
+def edicao(cpf_cnpj, nome, endereco, telefone, email, senha, login,especialidade, id):
+    stmt = f''' select "login" from "Usuarios" inner join "Funcionarios" on "Usuarios"."id_usuario" = "Funcionarios"."id_usuario" where "Funcionarios"."id_funcionario" = {id}'''
+    result = sql.query(stmt)
+    for x in result:
+        if x['login'] != login:
+            stmt = f'''select "id_usuario" from "Usuarios" where "login" = '{login}' '''
+            result1 = sql.query(stmt)
+        else:
+            result1 = []
+    print(result1)
+    if result1 == []:
+        stmt = f'''UPDATE "Funcionarios" set "nome" = '{nome}', "endereco" = '{endereco}', "telefone" = '{telefone}', "email" = '{email}' , "especialidade" = '{especialidade}' where  "id_funcionario" = {id}'''
+        result = sql.update(stmt)
+        stmt = f'''select "id_usuario" from "Funcionarios" where  "id_funcionario" = {id} '''
+        result = sql.query(stmt)
+        for x in result:
+            stmt = f''' UPDATE "Usuarios" set "CPF_CNPJ" = '{cpf_cnpj}' , "senha" = '{senha}',"login" = '{login}' where  "id_usuario" = {x['id_usuario']}'''
+            result = sql.update(stmt)
+    else:
+        result = 'Login já existe'
+    return result
+
+
+def busca(idfuncionario):
+    stmt = f'''select "id_funcionario","CPF_CNPJ", "email", "telefone","especialidade","nome", "login", "endereco", "senha" from "Usuarios" inner join "Funcionarios" on "Usuarios"."id_usuario" = "Funcionarios"."id_usuario" where "id_funcionario" = {idfuncionario} '''
+    result = sql.query(stmt)
+    return result
+

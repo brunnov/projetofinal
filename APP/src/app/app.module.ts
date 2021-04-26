@@ -46,6 +46,7 @@ import { TableComponent } from './pages/agendamento/table/table.component';
 import { OsComponent } from './pages/agendamento/os/os.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MenuComponent } from './utils/menu/menu.component';
+import { AdministradorComponent } from './pages/administrador/administrador.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { MenuComponent } from './utils/menu/menu.component';
     TableComponent,
     OsComponent,
     MenuComponent,
+    AdministradorComponent,
   ],
   imports: [
     FormsModule,

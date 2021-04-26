@@ -7,10 +7,9 @@ import { DataServiceFuncionario } from '../funcionario.data.service';
 @Component({
   selector: 'app-modal',
   templateUrl: './modal.component.html',
-  styleUrls: ['./modal.component.scss']
+  styleUrls: ['./modal.component.scss'],
 })
 export class ModalComponent implements OnInit {
-
   hide = true;
   dados: any[] = [];
   toppingList: any[] = [];
@@ -18,27 +17,20 @@ export class ModalComponent implements OnInit {
   topping;
   selected: any;
   selected2: any;
-  constructor(   public dialogRef: MatDialogRef<ModalComponent>,
-                 @Inject(MAT_DIALOG_DATA) public data: DialogData,
-                 private dataService: DataServiceFuncionario) {
-                if (data.diapagamento !== undefined) {this.selected = data.diapagamento.toString();
-                                                      
-                                                      this.selected2 = data.formapagamento; }
-              }
+  constructor(
+    public dialogRef: MatDialogRef<ModalComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    private dataService: DataServiceFuncionario
+  ) {
+    if (data.diapagamento !== undefined) {
+    }
+  }
 
-ngOnInit() {
+  ngOnInit() {}
 
-}
-
-
-getInnerText(innerText: any[]) {
-  
-}
-selectionDia(text: any) {
-  
-}
-onNoClick(): void {
-this.dialogRef.close();
-}
-
+  getInnerText(innerText: any[]) {}
+  selectionDia(text: any) {}
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
 }

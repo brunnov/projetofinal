@@ -46,14 +46,14 @@ export class TableComponent implements OnInit {
   }
 
   edicao(row): void {
-    this.dataService.postFuncionarios(row.id_usuario).subscribe(
+    this.dataService.postFuncionarios(row.id_funcionario).subscribe(
           (res: any) => {
             this.data = res;
             const dialogRef = this.dialog.open(ModalComponent, {
               width: '600px',
               height: '600px',
-              data: {nome: res[0].nome_razaosocial, email: res[0].email, endereco: res[0].endereco, telefone: res[0].telefone,
-              senha: res[0].senha, cpf_cnpj: res[0].CPF_CNPJ, responsavel: res[0].responsavel, diapagamento: res[0].dia_pagamento,
+              data: {nome: res[0].nome, email: res[0].email, endereco: res[0].endereco, telefone: res[0].telefone,
+              senha: res[0].senha, cpf_cnpj: res[0].CPF_CNPJ, especialidade: res[0].especialidade, diapagamento: res[0].dia_pagamento,
               formapagamento: res[0].codigo_forma_pagamento, header: 'Editar Funcionario', login: res[0].login  },
             });
             dialogRef.afterClosed().subscribe(result => {
@@ -61,13 +61,18 @@ export class TableComponent implements OnInit {
               let d;
               console.log('The dialog was closed');
 
-              this.dataService.postFuncionarioEdicao(this.data[0].Id_Usuario, result.nome, result.email, result.endereco,
-                result.cpf_cnpj, result.telefone, result.senha, p, result.responsavel, d).subscribe(
+              this.dataService.postFuncionarioEdicao(this.data[0].id_funcionario, result.nome, result.email, result.endereco,
+                result.cpf_cnpj, result.telefone, result.senha, result.login, result.especialidade).subscribe(
                 (res: any) => {
                   this.data = res;
-                  if ( this.data === ['rollback']) {
-                    alert('erro');
+                  if ( res === 'rollback' || res === null) {
+                    alert('Erro ao Atualizar o Cliente');
                   }
+                  if(res === 'Login já existe'){
+                    alert('Login já existe')
+                  }
+                  if(res === 'Feito')
+                  {location.reload();}
                 },
                 err => {
                   console.log(err);
@@ -90,16 +95,16 @@ export class TableComponent implements OnInit {
     } else {
       this.dataSource.data.forEach(row => {
       this.selection.select(row);
-      selecionado.push(row.id_usuario);
+      selecionado.push(row.id_funcionario);
     });
   }
   }
 
   selecao(checked, row) {
     if (checked) {
-      selecionado.push(row.id_usuario);
+      selecionado.push(row.id_funcionario);
     } else {
-      selecionado.splice(selecionado.indexOf(row.id_usuario), 1);
+      selecionado.splice(selecionado.indexOf(row.id_funcionario), 1);
 
     }
   }
@@ -109,6 +114,6 @@ export class TableComponent implements OnInit {
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id_usuario + 1}`;
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id_funcionario + 1}`;
   }
 }

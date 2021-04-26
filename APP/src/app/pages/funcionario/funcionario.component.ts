@@ -15,8 +15,7 @@ export interface DialogData {
   endereco: string;
   senha: string;
   email: string;
-  responsavel: string;
-  formapagamento: string;
+  especialidade: string;
 }
 @Component({
   selector: 'app-funcionario',

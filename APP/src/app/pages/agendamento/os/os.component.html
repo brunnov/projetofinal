@@ -12,7 +12,7 @@
     <p><a routerLink="/funcionario">Funcionários</a></p>
     <p><a routerLink="/agendamento">Serviços</a></p>
     <p><a routerLink="/home">Estoque</a></p>
-
+    <p><a routerLink="/administracao">Administração</a></p>
   </mat-sidenav>
 
   <mat-sidenav-content>
@@ -25,36 +25,22 @@
         <div mat-dialog-content class="inputSelect">
           <mat-form-field class="select">
             <mat-label>Cliente:</mat-label>
-            <mat-select
-              [(value)]="selected"
-              (selectionChange)="selectionDia($event.value)"
-            >
-              <mat-option value="1">1</mat-option>
-              <mat-option value="2">2</mat-option>
-              <mat-option value="3">3</mat-option>
-              <mat-option value="4">4</mat-option>
-              <mat-option value="5">5</mat-option>
-              <mat-option value="6">6</mat-option>
-              <mat-option value="7">7</mat-option>
-              <mat-option value="8">8</mat-option>
-              <mat-option value="9">9</mat-option>
-              <mat-option value="10">10</mat-option>
-              <mat-option value="11">11</mat-option>
-              <mat-option value="12">12</mat-option>
-              <mat-option value="13">13</mat-option>
-              <mat-option value="14">14</mat-option>
-              <mat-option value="15">15</mat-option>
-              <mat-option value="16">16</mat-option>
-              <mat-option value="17">17</mat-option>
-              <mat-option value="18">18</mat-option>
-              <mat-option value="19">19</mat-option>
-              <mat-option value="20">20</mat-option>
-              <mat-option value="21">21</mat-option>
-              <mat-option value="22">22</mat-option>
-              <mat-option value="23">23</mat-option>
-              <mat-option value="24">24</mat-option>
-              <mat-option value="25">25</mat-option>
-            </mat-select>
+            <input
+              type="text"
+              placeholder="Digite o nome do Cliente"
+              aria-label="Number"
+              matInput
+              [formControl]="myControl"
+              [matAutocomplete]="auto"
+            />
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+              <mat-option
+                *ngFor="let option of filteredOptions | async"
+                [value]="option"
+              >
+                {{ option.nome_razaosocial }}
+              </mat-option>
+            </mat-autocomplete>
           </mat-form-field>
         </div>
         <div mat-dialog-content class="inputSelect">
@@ -167,5 +153,6 @@
         </button>
       </div>
     </div>
+    
   </mat-sidenav-content>
 </mat-sidenav-container>

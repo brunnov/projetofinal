@@ -28,8 +28,8 @@ export class DataServiceAgendamento {
     };
   }
 
-  getClientes(): Observable<any[]> {
-    const url = `${apiUrl}/clientes`;
+  getAgendamento(): Observable<any[]> {
+    const url = `${apiUrl}/buscaagendamento`;
     return this.http.get<any[]>(url).pipe(
       tap((clientes) => console.log('fetched clientes')),
       catchError(this.handleError('getClientes', []))
