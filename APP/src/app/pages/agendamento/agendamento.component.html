@@ -17,7 +17,7 @@
           </button>
           <div class="div-container">
             <div>
-              <app-table-os></app-table-os>
+              <app-table-os (pedido)="receberPedido($event)"></app-table-os>
             </div>
             <div class="example-button-row">
                 <button mat-raised-button color="accent" routerLink="/os">Agendamento</button>

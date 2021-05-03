@@ -134,5 +134,31 @@ def buscaagendamento():
     result = age.todos()
     return jsonify(result)
 
+@app.route('/agendamentoinclusao',methods = ['POST'])
+def inclusaoagendamento():
+    request.get_json(force=True)
+    cliente = request.json['cliente']
+    funcionario = request.json['funcionario']
+    data = request.json['data']
+    prioridade = request.json['prioridade']
+    assunto = request.json['assunto']
+    observacao = request.json['observacao']
+    result = age.inclusao(cliente,funcionario,data,prioridade,assunto,observacao)
+    return jsonify(result)
+
+@app.route('/agendamentoexclusao',methods = ['POST'])
+def exclusaoagendamento():    
+    request.get_json(force=True)
+    id = request.json['id']
+    result = age.exclusao(id)
+    return jsonify(result)
+
+@app.route('/agendamentobusca', methods = ['POST'])
+def agendamentobuscaid():
+    request.get_json(force=True)
+    id = request.json['id']
+    result = age.busca(id)
+    return jsonify(result)
+
 if __name__ == '__main__':    
     app.run(host="localhost",debug=True)

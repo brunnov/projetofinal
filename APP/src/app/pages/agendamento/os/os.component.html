@@ -33,7 +33,7 @@
               [formControl]="myControl"
               [matAutocomplete]="auto"
             />
-            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)='getCliente($event.option.value)'>
               <mat-option
                 *ngFor="let option of filteredOptions | async"
                 [value]="option"
@@ -46,47 +46,20 @@
         <div mat-dialog-content class="inputSelect">
           <mat-form-field class="select">
             <mat-label>Funcionário:</mat-label>
-            <mat-select
-              [(value)]="selected"
-              (selectionChange)="selectionDia($event.value)"
-            >
-              <mat-option value="1">1</mat-option>
-              <mat-option value="2">2</mat-option>
-              <mat-option value="3">3</mat-option>
-              <mat-option value="4">4</mat-option>
-              <mat-option value="5">5</mat-option>
-              <mat-option value="6">6</mat-option>
-              <mat-option value="7">7</mat-option>
-              <mat-option value="8">8</mat-option>
-              <mat-option value="9">9</mat-option>
-              <mat-option value="10">10</mat-option>
-              <mat-option value="11">11</mat-option>
-              <mat-option value="12">12</mat-option>
-              <mat-option value="13">13</mat-option>
-              <mat-option value="14">14</mat-option>
-              <mat-option value="15">15</mat-option>
-              <mat-option value="16">16</mat-option>
-              <mat-option value="17">17</mat-option>
-              <mat-option value="18">18</mat-option>
-              <mat-option value="19">19</mat-option>
-              <mat-option value="20">20</mat-option>
-              <mat-option value="21">21</mat-option>
-              <mat-option value="22">22</mat-option>
-              <mat-option value="23">23</mat-option>
-              <mat-option value="24">24</mat-option>
-              <mat-option value="25">25</mat-option>
+            <mat-select (selectionChange)="getInnerText($event.value)" [(value)]="selected">
+              <mat-option *ngFor="let topping of funcionarioList"  [value]="topping.id_funcionario">{{topping.nome}}</mat-option>
             </mat-select>
           </mat-form-field>
         </div>
         <div mat-dialog-content class="inputSelect">
           <mat-form-field>
-            <mat-label>Data Abertura:</mat-label>
-            <input matInput [matDatepicker]="picker1" [formControl]="date" />
+            <mat-label>Data Agendamento:</mat-label>
+            <input matInput [matDatepicker]="picker1" [formControl]="date" (dateInput)="onDate($event)" />
             <mat-datepicker-toggle
               matSuffix
               [for]="picker1"
             ></mat-datepicker-toggle>
-            <mat-datepicker #picker1></mat-datepicker>
+            <mat-datepicker #picker1 ></mat-datepicker>
           </mat-form-field>
         </div>
         <div mat-dialog-content class="inputSelect">
@@ -94,47 +67,25 @@
             <mat-label>Prioridade:</mat-label>
             <mat-select
               [(value)]="selected"
-              (selectionChange)="selectionDia($event.value)"
+              (selectionChange)="getPrioridade($event.value)"
             >
-              <mat-option value="1">1</mat-option>
-              <mat-option value="2">2</mat-option>
-              <mat-option value="3">3</mat-option>
-              <mat-option value="4">4</mat-option>
-              <mat-option value="5">5</mat-option>
-              <mat-option value="6">6</mat-option>
-              <mat-option value="7">7</mat-option>
-              <mat-option value="8">8</mat-option>
-              <mat-option value="9">9</mat-option>
-              <mat-option value="10">10</mat-option>
-              <mat-option value="11">11</mat-option>
-              <mat-option value="12">12</mat-option>
-              <mat-option value="13">13</mat-option>
-              <mat-option value="14">14</mat-option>
-              <mat-option value="15">15</mat-option>
-              <mat-option value="16">16</mat-option>
-              <mat-option value="17">17</mat-option>
-              <mat-option value="18">18</mat-option>
-              <mat-option value="19">19</mat-option>
-              <mat-option value="20">20</mat-option>
-              <mat-option value="21">21</mat-option>
-              <mat-option value="22">22</mat-option>
-              <mat-option value="23">23</mat-option>
-              <mat-option value="24">24</mat-option>
-              <mat-option value="25">25</mat-option>
+              <mat-option value="1">Verde</mat-option>
+              <mat-option value="2">Amarelo</mat-option>
+              <mat-option value="3">Vermelho</mat-option>
+              <mat-option value="4">Roxo</mat-option>
             </mat-select>
           </mat-form-field>
         </div>
         <div mat-dialog-content class="inputSelect">
           <mat-form-field>
             <mat-label>Assunto: </mat-label>
-            <input matInput />
+            <input matInput [(ngModel)]="assunto"/>
           </mat-form-field>
         </div>
-        <div mat-dialog-content class="inputSelect"></div>
         <div mat-dialog-content class="inputSelect">
           <mat-form-field appearance="fill">
             <mat-label>Observações: </mat-label>
-            <textarea matInput></textarea>
+            <textarea matInput [(ngModel)]="observacao"></textarea>
           </mat-form-field>
         </div>
         <div mat-dialog-actions></div>
@@ -143,12 +94,12 @@
         <button
           mat-raised-button
           color="accent"
-          [mat-dialog-close]="data"
           cdkFocusInitial
+          (click)="incluirOS()"
         >
           Salvar
         </button>
-        <button mat-raised-button color="accent" routerLink="/agendamento">
+        <button mat-raised-button color="accent" (click)="voltar()" >
           Voltar
         </button>
       </div>

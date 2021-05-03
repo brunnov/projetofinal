@@ -22,30 +22,30 @@
     <!-- Position Column -->
     <ng-container matColumnDef="os">
       <th mat-header-cell *matHeaderCellDef> OS </th>
-      <td mat-cell *matCellDef="let element"> {{element.id_clientes}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.id_agendamento}} </td>
     </ng-container>
   
     <!-- Name Column -->
     <ng-container matColumnDef="abertura">
-      <th mat-header-cell *matHeaderCellDef> Data Abertura </th>
-      <td mat-cell *matCellDef="let element"> {{element.nome_razaosocial}} </td>
+      <th mat-header-cell *matHeaderCellDef> Data Agendamento </th>
+      <td mat-cell *matCellDef="let element"> {{element.data_agendamento | date:'dd/MM/yyyy'}} </td>
     </ng-container>
   
     <!-- Weight Column -->
     <ng-container matColumnDef="cliente">
       <th mat-header-cell *matHeaderCellDef> Cliente </th>
-      <td mat-cell *matCellDef="let element"> {{element.CPF_CNPJ}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.nome_razaosocial}} </td>
     </ng-container>
   
     <!-- Symbol Column -->
     <ng-container matColumnDef="status">
       <th mat-header-cell *matHeaderCellDef> Status </th>
-      <td mat-cell *matCellDef="let element"> {{element.telefone}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.status}} </td>
     </ng-container>
   
     <ng-container matColumnDef="funcionario">
       <th mat-header-cell *matHeaderCellDef> Funcionário </th>
-      <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.nome}} </td>
     </ng-container>
     
 
